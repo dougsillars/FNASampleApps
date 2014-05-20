@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="com.example.networkactivitysample.MainActivity"
+    tools:ignore="MergeRootFrame" >
+    
+>
+ 
+        
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="@string/Refresh_Page" />
+
+        <CheckBox
+            android:id="@+id/FNAcheck"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/button1"
+            android:layout_alignBottom="@+id/button1"
+            android:layout_toRightOf="@+id/button1"
+            android:text="FNA?" />
+
+        <ImageView
+            android:id="@+id/bgimage"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/button1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true" />
+
+
+
+        <TextView
+            android:id="@+id/NetworkState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button1"
+            android:layout_margin="5dp"
+            android:layout_marginTop="19dp"
+            
+            android:text="@string/Network_text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:id="@+id/Downloadtimes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/NetworkState"
+            
+            
+            android:layout_marginTop="19dp"
+            android:text="RTT times"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Network Activity Sample</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="Network_text">On refresh, network stats will populate</string>
+    <string name="Refresh_Page">Reload</string>
+
+</resources>
