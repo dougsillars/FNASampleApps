@@ -48,17 +48,18 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.att.android.networkattenuatorlib.api.ARONetworkAttenuator;
-import com.att.android.networkattenuatorlib.api.AbstractNetworkAttenuator;
-import com.att.android.networkattenuatorlib.bean.NetworkConfig;
+//import com.att.android.networkattenuatorlib.api.ARONetworkAttenuator;
+//import com.att.android.networkattenuatorlib.api.AbstractNetworkAttenuator;
+//import com.att.android.networkattenuatorlib.bean.NetworkConfig;
 
 public class MainActivity extends Activity {
-	AbstractNetworkAttenuator an;
+	//AbstractNetworkAttenuator an;
 	BroadcastReceiver changeReceiver;
 	TextView Networkstate;
 	Button button;
 	CheckBox FNAcheck;
 	int signalStrengthValue;
+	int contentlength;
 	ImageView BackgroundImage;
 	String urlbig = "http://i661.photobucket.com/albums/uu340/dougtest/bridge_525_zps6dd074cb.jpg";
 	String urlmed = "http://i661.photobucket.com/albums/uu340/dougtest/bridge_525_50_zps30a24b7d.jpg";
@@ -87,10 +88,10 @@ public class MainActivity extends Activity {
 				
 				
 				try {
-					an = new ARONetworkAttenuator(getApplicationContext());
-					NetworkConfig nc = an.getNetworkConfig();
-					int downlinkspeed;
-					downlinkspeed = nc.getDownlinkSpeed();
+			//		an = new ARONetworkAttenuator(getApplicationContext());
+			//		NetworkConfig nc = an.getNetworkConfig();
+					int downlinkspeed = 0;
+			//		downlinkspeed = nc.getDownlinkSpeed();
 					
 					//data from the network
 					TelephonyManager teleMan = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
@@ -262,6 +263,8 @@ public class MainActivity extends Activity {
 		 TextView downloadtimes; 
          Long responsetime;
          Long imagetime;
+         Long contentlength;
+         Double Throughput;
 
 	        @Override
 	        protected Bitmap doInBackground(String... param) {
@@ -283,7 +286,7 @@ public class MainActivity extends Activity {
 	        protected void onPostExecute(Bitmap result) {
 	            Log.i("Async-Example", "onPostExecute Called");
 	            BackgroundImage.setImageBitmap(result);
-                downloadtimes.append("\n200 response: " + responsetime +"\nDownload: " + imagetime);
+                downloadtimes.append("\n200 response: " + responsetime +"\nDownload: " + imagetime + "\nsize: "+ contentlength +"\nThroughput: " +Throughput);
                 downloadtimes.setTextColor(Color.RED);
 	            
 	       //     simpleWaitDialog.dismiss();
@@ -305,13 +308,12 @@ public class MainActivity extends Activity {
 	                final int statusCode = response.getStatusLine().getStatusCode();
 	                Long gotresponse = System.currentTimeMillis();
 	                if (statusCode != HttpStatus.SC_OK) {
-	                    Log.w("ImageDownloader", "Error " + statusCode + 
-	                            " while retrieving bitmap from " + url);
 	                    return null;
-	 
 	                }
+	            
 	 
 	                final HttpEntity entity = response.getEntity();
+	                contentlength = entity.getContentLength();
 	                if (entity != null) {
 	                    InputStream inputStream = null;
 	                    try {
@@ -323,7 +325,7 @@ public class MainActivity extends Activity {
 	                        Long gotimage = System.currentTimeMillis();
 	                        responsetime  = gotresponse - start;
 	                        imagetime     = gotimage-start;
-
+	                        Throughput    = ((double)contentlength/1024)/((double)imagetime/1000);  //KB/s
 	                        return bitmap;
 	                    } finally {
 	                        if (inputStream != null) {
@@ -380,14 +382,14 @@ public class MainActivity extends Activity {
         		@Override
         		public void onReceive(Context context, Intent intent) {
         			System.out.println("Network config changed");
-        			System.out.println("New settings: " + an.getNetworkConfig());
+       // 			System.out.println("New settings: " + an.getNetworkConfig());
         		}
         		
         	};
         }
         
-		registerReceiver(changeReceiver, 
-         new IntentFilter(AbstractNetworkAttenuator.NETWORK_CONFIG_CHANGED_INTENT));
+//		registerReceiver(changeReceiver, 
+  //       new IntentFilter(AbstractNetworkAttenuator.NETWORK_CONFIG_CHANGED_INTENT));
     }
 	
 	@Override
